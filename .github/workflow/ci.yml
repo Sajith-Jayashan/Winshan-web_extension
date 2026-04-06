@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: cd backend && npm install
+
+      - name: Check app starts
+        run: |
+          cd backend
+          node index.js &
+          sleep 2
+          curl -f http://localhost:3000/shorten \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d '{"url":"https://google.com"}' || exit 1
