@@ -14,18 +14,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Start containers
-        run: docker-compose up --build -d
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Wait for backend to be ready
-        run: sleep 10
+      - name: Install dependencies
+        run: cd backend && npm install
 
-      - name: Test shorten endpoint
+      - name: Check app starts
         run: |
-          curl -f http://localhost:3000/shorten \
-            -X POST \
+          cd backend
+          node index.js &
+          sleep 3
+          curl -f -X POST http://localhost:3000/shorten \
             -H "Content-Type: application/json" \
             -d '{"url":"https://google.com"}' || exit 1
-
-      - name: Tear down
-        run: docker-compose down -v
