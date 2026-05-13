@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
 
-  # PostgreSQL database container
   db:
     image: postgres:15-alpine
     environment:
@@ -15,7 +14,6 @@ services:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # Backend API container
   backend:
     build: ./backend
     ports:
@@ -29,6 +27,13 @@ services:
       DB_PASSWORD: postgres
     depends_on:
       - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
 
 volumes:
   pgdata:

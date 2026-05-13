@@ -4,13 +4,19 @@ const routes = require('./routes');
 const pool = require('./db');
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://winshan-webextension-production.up.railway.app'  // replace with your actual Vercel URL
+  ]
+}));
+
 app.use(express.json());
 app.use('/', routes);
 
 const PORT = process.env.PORT || 3000;
 
-// Wait for DB to be ready then start
 async function start() {
   let retries = 5;
   while (retries) {
