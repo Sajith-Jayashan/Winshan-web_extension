@@ -8,7 +8,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://winshan-webextension-production.up.railway.app'  // replace with your actual Vercel URL
+    'https://winshan-web-extension.vercel.app/' 
   ]
 }));
 
