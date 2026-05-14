@@ -10,7 +10,7 @@ router.post('/shorten', async (req, res) => {
 
   const code = nanoid(6);
   // 2. Fix the localhost issue using the environment variable
-  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.BASE_URL || 'http://localhost:3000'}/${code}';
 
   try {
     // 3. Save the new URL directly into the database
