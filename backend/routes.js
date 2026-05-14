@@ -9,8 +9,9 @@ router.post('/shorten', async (req, res) => {
   if (!url) return res.status(400).json({ error: 'URL is required' });
 
   const code = nanoid(6);
-  // 2. Fix the localhost issue using the environment variable
-  const baseUrl = process.env.BASE_URL || 'http://localhost:3000'}/${code}';
+  
+  // FIXED: Removed the trailing syntax error
+  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
   try {
     // 3. Save the new URL directly into the database
